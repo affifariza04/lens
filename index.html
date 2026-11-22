@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>lens · search photos by meaning, on-device</title>
+<meta name="description" content="Semantic photo search that runs entirely in the browser: CLIP via Transformers.js, no server, no API key.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+<header>
+  <a class="brand" href="https://github.com/affifariza04/lens">lens<span>.</span></a>
+  <span class="pill">on-device · CLIP ViT-B/32 · Transformers.js</span>
+  <a class="gh" href="https://github.com/affifariza04/lens">GitHub ↗</a>
+</header>
+<main>
+  <section class="hero">
+    <h1>Search photos by <em>meaning</em>,<br>not by filename.</h1>
+    <p>Type anything. A vision-language model running inside your browser ranks every photo by how well it matches, with no server and no API key.</p>
+    <form id="form" autocomplete="off"><input id="q" type="search" placeholder="a yellow taxi in a busy street…" aria-label="Describe a photo"><button>Search</button></form>
+    <div class="chips">
+      <button data-q="a cat">a cat</button><button data-q="yellow taxis in the city">yellow taxis in the city</button>
+      <button data-q="coffee mug on a table">coffee mug on a table</button><button data-q="someone working on a laptop">someone working on a laptop</button>
+      <button data-q="waves crashing on rocks">waves crashing on rocks</button><button data-q="a vintage car">a vintage car</button>
+      <button data-q="snowy mountains">snowy mountains</button><button data-q="a quiet street at night">a quiet street at night</button>
+    </div>
+    <div id="meter"><i></i></div>
+    <p id="status" aria-live="polite">Preparing…</p>
+  </section>
+  <section id="grid" aria-label="Photo results"></section>
+  <section class="how">
+    <div><b>01 · Build time</b><p>Each photo is embedded once with CLIP's image encoder (Node, same model and quantisation) into a 512-d vector, shipped as a 260 KB JSON.</p></div>
+    <div><b>02 · In your browser</b><p>The text encoder (≈ 64 MB, quantised to int8) downloads once and is cached. Your query becomes a vector in a few milliseconds.</p></div>
+    <div><b>03 · Ranking</b><p>Cosine similarity against every photo, softmax at CLIP's logit scale for a confidence, and a FLIP animation to re-order the grid.</p></div>
+  </section>
+  <footer>Photos via Unsplash (picsum.photos) · Built by <a href="https://affifariza04.github.io/portfolio/">Affif Ariza Adiwijaya</a></footer>
+</main>
+<script type="module" src="src/app.js"></script>
+</body>
+</html>
